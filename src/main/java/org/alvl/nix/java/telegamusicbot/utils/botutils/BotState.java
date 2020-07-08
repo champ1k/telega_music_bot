@@ -57,15 +57,15 @@ public enum BotState {
 
             List<String> answers = MENU_REPLY_KEYBOARD_TEXT.getAnswers();
 
-            if (context.getInput().equals(answers.get(0))) {
+            if (context.getInput().equals("Find Song")) {
                 next = FIND_MUSIC;
-            } else if (context.getInput().equals(answers.get(1))) {
+            } else if (context.getInput().equals("Playlist")) {
 
                 next = PLAY_LIST;
-            } else if (context.getInput().equals(answers.get(2))) {
+            } else if (context.getInput().equals("Help")) {
 
                 next = HELP;
-            } else if (context.getInput().equals(answers.get(3))) {
+            } else if (context.getInput().equals("Random Song")) {
 
                 next = RANDOM_SONG;
             } else {
