@@ -8,6 +8,7 @@ import org.alvl.nix.java.telegamusicbot.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SongService implements SongOperations {
@@ -18,6 +19,11 @@ public class SongService implements SongOperations {
     @Override
     public List<Song> findAll() {
         return songRepository.findAll();
+    }
+
+    @Override
+    public List<Integer> findAllIds() {
+        return songRepository.findAll().stream().map(Song::getId).collect(Collectors.toList());
     }
 
     @Override

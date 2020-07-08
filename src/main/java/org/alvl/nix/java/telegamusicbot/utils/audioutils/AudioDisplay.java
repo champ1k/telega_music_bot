@@ -27,7 +27,8 @@ public class AudioDisplay {
 
     public static SendAudio sendRandomSong(BotContext context, SongService songService, String buttontext) throws SongNotFoundException {
         Random random = new Random();
-        Song song = songService.findSongById(random.nextInt(songService.findAll().size()) + 1);
+        List<Integer> songIds = songService.findAllIds();
+        Song song = songService.findSongById(songIds.get(random.nextInt(songIds.size())));
         SendAudio message = new SendAudio();
         message.setChatId(context.getUser().getChatId());
         message.setAudio(song.getFileId());
@@ -35,31 +36,15 @@ public class AudioDisplay {
         return message;
     }
 
-    public static SendMessage sendAllSongsByTitle(BotContext context, SongService songService, String inputtext) {
+    public static boolean sendAllSongsByTitle(BotContext context, SongService songService, String inputtext) {
         List<Song> songs = songService.findAllByTitle(inputtext);
-        List<SendAudio> audio = new ArrayList<>(songs.size());
-        Set<SendAudio> messages = new HashSet<>(songs.size());
-
-        SendMessage nmsg = new SendMessage();
         if (songs.isEmpty()) {
-            return new SendMessage(context.getUser().getChatId(), NO_SONG_MSG);
+            return false;
         }
-        for (int i = 0; i < songs.size(); i++) {
-            songs.forEach(song -> {
-                SendAudio sendAudio = new SendAudio().setChatId(context.getUser().getChatId()).setAudio(song.getFileId()).setCaption(song.getTitle()).setDuration(song.getDuration());
-                audio.add(sendAudio);
-                messages.add(sendAudio);
-                nmsg.setChatId(context.getUser().getChatId());
-                try {
-                    if (messages.contains(sendAudio)) {
-                        context.getBot().execute(sendAudio);
-                    }
-                } catch (TelegramApiException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-        return nmsg;
+        songs.stream()
+                .map(song -> new SendAudio().setChatId(context.getUser().getChatId()).setAudio(song.getFileId()).setCaption(song.getTitle()).setDuration(song.getDuration()))
+                .forEach(song -> sendSong(context, song));
+        return true;
     }
 
     public static SendMessage sendAllSongs(BotContext context, SongService songService) {
@@ -87,5 +72,13 @@ public class AudioDisplay {
         message.setAudio(song.getFileId());
         message.setReplyMarkup(createSongKeyboard("Open Menu"));
         return message;
+    }
+
+    private static void sendSong(BotContext context, SendAudio audio) {
+        try {
+            context.getBot().execute(audio);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 }

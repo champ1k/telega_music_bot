@@ -91,7 +91,7 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
             newUser.setStateId(state.ordinal());
             userService.save(newUser);
             context = BotContext.of(this, newUser, text, update);
-            state.enter(context, songService, update);
+//            state.enter(context, songService, update);
             logger.info("NEW USER :" + newUser.getId());
         } else {
             context = BotContext.of(this, user, text, update);
@@ -101,14 +101,12 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
 
         state.handleInput(context, update, songService);
 
-        while (state.isBotStopped()) {
+        do {
             state = state.nextState();
             logger.warn("current state " + state);
             logger.info(context.getInput());
             state.enter(context, songService, update);
-        }
-
-
+        } while (!state.isBotStopped());
 
         context.getUser().setStateId(state.ordinal());
         userService.save(context.getUser());

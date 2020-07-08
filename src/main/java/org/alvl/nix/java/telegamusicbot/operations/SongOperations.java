@@ -13,6 +13,8 @@ public interface SongOperations {
 
     List<Song> findAll();
 
+    List<Integer> findAllIds();
+
     void save(Song audio);
 
     void delete(Integer id);

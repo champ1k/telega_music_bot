@@ -35,6 +35,8 @@ public enum BotState {
             List<String> answers = MENU_REPLY_KEYBOARD_TEXT.getAnswers();
             if (context.getInput().equals("Start Using Bot")) {
                 next = MAIN_MENU;
+            } else {
+                next = START;
             }
         }
 
@@ -95,8 +97,9 @@ public enum BotState {
             if (context.getInput().equals("Open Menu")) {
                 next = MAIN_MENU;
             } else if (!context.getInput().isEmpty()) {
-                context.getBot().execute(AudioDisplay.sendAllSongsByTitle(context, songService, context.getInput()));
-
+                if (!AudioDisplay.sendAllSongsByTitle(context, songService, context.getInput())) {
+                    context.getBot().execute(new SendMessage(context.getUser().getChatId(), NO_SONG_MSG));
+                }
                 next = FIND_MUSIC;
             } else next = WAITING;
         }
@@ -121,7 +124,9 @@ public enum BotState {
             if (context.getInput().equals("Open Menu")) {
                 next = MAIN_MENU;
             } else if (!context.getInput().isEmpty()) {
-                context.getBot().execute(AudioDisplay.sendAllSongsByTitle(context, songService, context.getInput()));
+                if (!AudioDisplay.sendAllSongsByTitle(context, songService, context.getInput())) {
+                    context.getBot().execute(new SendMessage(context.getUser().getChatId(), NO_SONG_MSG));
+                }
                 next = FIND_MUSIC;
             } else next = WAITING;
         }
@@ -167,9 +172,9 @@ public enum BotState {
 
         @Override
         public void handleInput(BotContext context, Update update, SongService songService) throws TelegramApiException {
+            next = MAIN_MENU;
             if (context.getInput().equals("\uD83D\uDC97")) {
                 context.getBot().execute(deleteMessage(update));
-                next = MAIN_MENU;
             } else if (context.getInput().equals("\uD83D\uDC94")) {
                 context.getBot().execute(deleteMessage(update));
                 context.getBot().execute(deleteMessage(messageId, update));
