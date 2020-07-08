@@ -33,7 +33,7 @@ public enum BotState {
         @Override
         public void handleInput(BotContext context, Update update, SongService songService) {
             List<String> answers = MENU_REPLY_KEYBOARD_TEXT.getAnswers();
-            if (context.getInput().equals(answers.get(0))) {
+            if (context.getInput().equals("Start Using Bot")) {
                 next = MAIN_MENU;
             }
         }
