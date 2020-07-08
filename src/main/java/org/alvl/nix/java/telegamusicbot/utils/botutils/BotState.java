@@ -54,22 +54,24 @@ public enum BotState {
 
         @Override
         public void handleInput(BotContext context, Update update, SongService songService) {
+            switch (context.getInput()) {
+                case "Find Song":
+                    next = FIND_MUSIC;
+                    break;
+                case "Playlist":
+                    next = PLAY_LIST;
+                    break;
+                case "Help":
 
-            List<String> answers = MENU_REPLY_KEYBOARD_TEXT.getAnswers();
+                    next = HELP;
+                    break;
+                case "Random Song":
 
-            if (context.getInput().equals("Find Song")) {
-                next = FIND_MUSIC;
-            } else if (context.getInput().equals("Playlist")) {
-
-                next = PLAY_LIST;
-            } else if (context.getInput().equals("Help")) {
-
-                next = HELP;
-            } else if (context.getInput().equals("Random Song")) {
-
-                next = RANDOM_SONG;
-            } else {
-                next = WAITING;
+                    next = RANDOM_SONG;
+                    break;
+                default:
+                    next = WAITING;
+                    break;
             }
         }
 

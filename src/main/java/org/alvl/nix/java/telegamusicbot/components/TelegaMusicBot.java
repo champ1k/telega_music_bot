@@ -106,7 +106,7 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
             logger.warn("current state " + state);
             logger.info(context.getInput());
             state.enter(context, songService, update);
-        } while (!state.isBotStopped());
+        } while (state.isBotStopped());
 
 
         context.getUser().setStateId(state.ordinal());
