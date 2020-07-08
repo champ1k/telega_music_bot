@@ -77,29 +77,32 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
         }
 
 
+        User user = userService.findUserById(update.getMessage().getFrom().getId());
+
+        if (text != null && checkIfAdminCommand(user, text)) {
+            return;
+        }
+
         BotContext context;
         BotState state;
 
-        User user = null;
-        try {
-            user = userService.findUserById(update.getMessage().getFrom().getId());
-            context = BotContext.of(this, user, text, update);
-            state = BotState.byId(user.getStateId());
-            logger.info("user " + user.getId() + " in state " + state);
-        } catch (UserNotFoundException ignored) {
+        if (user == null) {
             state = BotState.getInitialState();
             User newUser = new User();
+            newUser.setId(update.getMessage().getFrom().getId());
             newUser.setChatId(chatId);
             newUser.setNickname(update.getMessage().getFrom().getUserName());
             newUser.setStateId(state.ordinal());
             userService.save(newUser);
-            context = BotContext.of(this, newUser, text, update);
-            state.enter(context, songService, update);
-            logger.info("NEW USER :" + newUser.getId());
-        }
 
-        if (text != null && checkIfAdminCommand(user, text)) {
-            return;
+            context = BotContext.of(this, newUser, text, update);
+            state.enter(context,songService,update);
+            logger.info("NEW USER :" + newUser.getId());
+        } else {
+            context = BotContext.of(this, user, text, update);
+            state = BotState.byId(user.getStateId());
+
+            logger.info("user " + user.getId() + " in state " + state);
         }
 
         state.handleInput(context, update, songService);

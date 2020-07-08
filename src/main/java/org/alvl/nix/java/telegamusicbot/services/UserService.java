@@ -23,7 +23,7 @@ public class UserService implements UserOperations {
 
     @Override
     public User findUserById(Integer id) throws UserNotFoundException {
-        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
