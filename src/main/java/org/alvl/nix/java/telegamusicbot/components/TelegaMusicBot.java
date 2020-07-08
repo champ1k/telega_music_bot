@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -43,9 +44,10 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
     @Autowired
     private SongService songService;
 
-    private static final String bot_nick = "tlgrmmsc_bot";
-
-    private static final String bot_tok = "1370571714:AAHGPugUSdsh-9arbvJ84Ogx6ip-qL0FKQI";
+    @Value("${bot.nickname}")
+    private  String bot_nick ;
+    @Value("${bot.token}")
+    private  String bot_tok ;
 
     @Override
     public String getBotUsername() {

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.telegram.telegrambots.ApiContextInitializer;
 
-@ComponentScan(basePackages = {"org.alvl.nix.java.telegamusicbot.*"})
+@ComponentScan(basePackages = {"org.alvl.nix.java.telegamusicbot.*","org.alvl.nix.java.telegamusicbot.model"})
 @EnableJpaRepositories(basePackageClasses = {UserRepository.class, SongRepository.class})
 @EntityScan(basePackages = {"org.alvl.nix.java.telegamusicbot.*"})
 @SpringBootApplication
