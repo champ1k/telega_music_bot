@@ -30,8 +30,7 @@ public class BotPhrases {
             + "\uD83D\uDCD4 HELP - this command will show help message. \n"
             + "\uD83C\uDFB5 Random Song - this command will send you a random song.\n"
             + "Do you want save it to your playlist \uD83D\uDC97 \n"
-            + "or delete this song from chat \u274C \n"
-            + "or remove this song from your playlist \uD83D\uDC94 \n\n"
+            + "or delete this song from chat and get one more song\uD83D\uDC94 \n\n\n"
             + "Thank's for using this bot! \uD83D\uDC9C \n\n\n"
             + "For wishes, feedbacks and ads contact : @champ1k";
 
