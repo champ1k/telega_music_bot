@@ -1,8 +1,10 @@
 package org.alvl.nix.java.telegamusicbot.services;
+import org.alvl.nix.java.telegamusicbot.exceptions.UserNotFoundException;
 import org.alvl.nix.java.telegamusicbot.model.User;
 import org.alvl.nix.java.telegamusicbot.operations.UserOperations;
 import org.alvl.nix.java.telegamusicbot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +22,8 @@ public class UserService implements UserOperations {
     }
 
     @Override
-    public User findUserById(Integer id) {
-        return userRepository.findById(id).orElseThrow();
+    public User findUserById(Integer id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
     }
 
     @Override

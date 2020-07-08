@@ -2,6 +2,7 @@ package org.alvl.nix.java.telegamusicbot.components;
 
 import lombok.SneakyThrows;
 
+import org.alvl.nix.java.telegamusicbot.exceptions.UserNotFoundException;
 import org.alvl.nix.java.telegamusicbot.model.Song;
 import org.alvl.nix.java.telegamusicbot.model.User;
 import org.alvl.nix.java.telegamusicbot.services.SongService;
@@ -273,7 +274,7 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
             String sb = "-------------\n" +
                     "User " + user.toString() + "\n" + "-------------\n";
             sendMessage(admin.getChatId(), sb);
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | UserNotFoundException e) {
             sendMessage(admin.getChatId(), "Chat Id is incorrect!");
         }
     }

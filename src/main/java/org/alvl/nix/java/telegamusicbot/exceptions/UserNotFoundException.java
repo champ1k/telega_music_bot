@@ -6,7 +6,6 @@ public class UserNotFoundException extends TelegramApiException {
     public UserNotFoundException(Integer id) {
         super("Could not find user with this" + id + "id");
     }
-    public UserNotFoundException(String nickname) {
-        super("Could not find user with this" + nickname + "nickname");
-    }
+
+
 }

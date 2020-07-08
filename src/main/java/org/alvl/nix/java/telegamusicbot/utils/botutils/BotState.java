@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -158,7 +159,7 @@ public enum BotState {
 
         @Override
         public void enter(BotContext context, SongService songService, Update update) throws TelegramApiException {
-            var execute = context.getBot().execute(AudioDisplay.sendRandomSong(context, songService, "Menu"));
+            Message execute = context.getBot().execute(AudioDisplay.sendRandomSong(context, songService, "Menu"));
             messageId = execute.getMessageId();
         }
 
