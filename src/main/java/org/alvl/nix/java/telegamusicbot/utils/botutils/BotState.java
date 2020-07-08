@@ -269,10 +269,6 @@ public enum BotState {
         return botStopped;
     }
 
-    public void setBotStopped(boolean stopped) {
-        botStopped = stopped;
-    }
-
     public void handleInput(BotContext context, Update update, SongService songService) throws TelegramApiException {
         //impl in childes
     }
