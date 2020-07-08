@@ -22,7 +22,7 @@ public class UserService implements UserOperations {
     }
 
     @Override
-    public User findUserById(Integer id) throws UserNotFoundException {
+    public User findUserById(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -34,5 +34,10 @@ public class UserService implements UserOperations {
     @Override
     public void delete(Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findUserByChatId(Long chatId) {
+        return userRepository.findUserByChatId(chatId);
     }
 }

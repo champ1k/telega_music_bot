@@ -8,11 +8,13 @@ import java.util.List;
 
 @Service
 public interface UserOperations {
-    User findUserById(Integer id) throws UserNotFoundException;
+    User findUserById(Integer id);
 
     List<User> findAll();
 
     void save(User user);
 
     void delete(Integer id);
+
+    User findUserByChatId(Long chatId);
 }

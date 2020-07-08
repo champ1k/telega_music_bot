@@ -71,7 +71,7 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
 
 
 
-        User user = userService.findUserById(update.getMessage().getFrom().getId());
+        User user = userService.findUserByChatId(update.getMessage().getChatId());
         if (update.getMessage().getAudio() != null) {
             saveUserSong(update, songService);
             sendMessage(chatId, ADD_SONG_MSG);
@@ -278,7 +278,7 @@ public class TelegaMusicBot extends TelegramLongPollingBot {
             String sb = "-------------\n" +
                     "User " + user.toString() + "\n" + "-------------\n";
             sendMessage(admin.getChatId(), sb);
-        } catch (RuntimeException | UserNotFoundException e) {
+        } catch (RuntimeException e) {
             sendMessage(admin.getChatId(), "Chat Id is incorrect!");
         }
     }
